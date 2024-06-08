@@ -2,6 +2,42 @@
 title: "About me"
 ---
 
-Add some text and a figure describing myself.
+![](headshot.jpg){width="170"}
 
-For details, see the exercise instructions. 
+**Education**
+
+-   Obtained my Bachelor's degree in Statistics with a Minor in Actuarial Science from the University of Texas at San Antonio(UTSA) in 2020.
+
+-   Currently pursing my Master's degree in Data Analytics at UTSA.
+
+**Career**
+
+-   Business Intelligence Analyst at USAA since 2021
+
+**Technical Experience**
+
+-   R
+
+-   SAS
+
+-   Snowflake
+
+-   Python
+
+-   Tableau
+
+**Hobbies**
+
+-   Hanging out with my lab Jeter and my golden doodle Tommy.
+
+-   Exploring the great outdoors.
+
+-   Playing sports.
+
+-   Volunteering in my community.
+
+**Research Interest:**
+
+[Visualizing the Gap](https://nightingaledvs.com/visualizing-the-gap/)
+
+I am a big fan of basketball and am interested in the growth the WNBA has had these past couple of years, and especially this season.
