@@ -12,6 +12,8 @@ bibliography: ../dataanalysis-template-references.bib
 csl: ../apa.csl
 ---
 
+Rinu Thomas contributed to this exercise.
+
 The structure below is one possible setup for a data analysis project (including the course project). For a manuscript, adjust as needed. You don't need to have exactly these sections, but the content covering those sections should be addressed.
 
 This uses MS Word as output format. [See here](https://quarto.org/docs/output-formats/ms-word.html) for more information. You can switch to other formats, like html or pdf. See [the Quarto documentation](https://quarto.org/) for other formats.
@@ -36,7 +38,7 @@ library(knitr)
 
 ## Description of data and data source
 
-Age and Marital status variables were added to the data set. Age is provided in years. Marital status is categorical with the selection f Divorced, Married or Single.
+*Describe what the data is, what it contains, where it is from, etc. Eventually this might be part of a methods section.*
 
 ## Questions/Hypotheses to be addressed
 
@@ -84,6 +86,14 @@ resulttable=readRDS("../../results/tables-files/summarytable.rds")
 knitr::kable(resulttable)
 ```
 
+```{r}
+#| label: tbl-resulttable
+#| tbl-cap: "Linear Model Fit"
+#| echo: FALSE
+resulttable=readRDS("../../results/tables-files/resulttable3.rds")
+knitr::kable(resulttable)
+```
+
 ## Basic statistical analysis
 
 *To get some further insight into your data, if reasonable you could compute simple statistics (e.g. simple models with 1 predictor) to look for associations between your outcome(s) and each individual predictor variable. Though note that unless you pre-specified the outcome and main exposure, any "p\<0.05 means statistical significance" interpretation is not valid.*
@@ -95,6 +105,20 @@ knitr::kable(resulttable)
 #| fig-cap: "Height and weight stratified by gender."
 #| echo: FALSE
 knitr::include_graphics(here("starter-analysis-exercise","results","figures","height-weight-stratified.png"))
+```
+
+```{r}
+#| label: fig-boxplot
+#| fig-cap: "Boxplot of Height by Marital Status."
+#| echo: FALSE
+knitr::include_graphics(here("starter-analysis-exercise","results","figures","marital-height-boxplot.png"))
+```
+
+```{r}
+#| label: fig-scatter
+#| fig-cap: "Scatterplot of Weight vs. Age."
+#| echo: FALSE
+knitr::include_graphics(here("starter-analysis-exercise","results","figures","weight-age-scatter.png"))
 ```
 
 ## Full analysis
