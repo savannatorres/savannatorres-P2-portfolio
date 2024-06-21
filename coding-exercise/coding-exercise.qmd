@@ -76,8 +76,6 @@ summary(population_life_expectancy)
 
 Using the new variables you created, plot life expectancy as a function of infant mortality and as a function of population size. Make two separate plots. Plot the data as points. For the plot with population size on the x-axis, set the x-axis to a log scale.
 
- 
-
 ```{r}
 # Creating the plot for life expectancy as a function of infant mortality
 ggplot(data = infant_mortality_life_expectancy, aes(x = infant_mortality, y = life_expectancy)) +
@@ -87,8 +85,8 @@ ggplot(data = infant_mortality_life_expectancy, aes(x = infant_mortality, y = li
        y = "Life Expectancy") +
   theme_minimal()
 ```
-Observations:
-We can see a negative correlation between infant mortality and life expectancy, which makes sense.
+
+Observations: We can see a negative correlation between infant mortality and life expectancy, which makes sense.
 
 ```{r}
 # Creating the plot for life expectancy as a function of population size with x-axis log scale
@@ -100,8 +98,8 @@ ggplot(data = population_life_expectancy, aes(x = population, y = life_expectanc
        y = "Life Expectancy") +
   theme_minimal()
 ```
-Observations:
-You can see a positive correlation between population size and life expectancy. The pattern we see in the data is due to the fact that we have different years for individual countries, and that over time these countries increase in population size and also life expectancy.
+
+Observations: You can see a positive correlation between population size and life expectancy. The pattern we see in the data is due to the fact that we have different years for individual countries, and that over time these countries increase in population size and also life expectancy.
 
 ## More data processing
 
@@ -173,7 +171,85 @@ lm_fit2 <- lm(life_expectancy ~ log(population), data = africadata_year2000)
 summary(lm_fit2)
 ```
 
-Based off of the p-value of 0.4755 this suggests there is no significant linear
-relationship between log(population) and life_expectancy in this model. We conclude log(population) does not explain much of the variation in life_expectancy.
+Based off of the p-value of 0.4755 this suggests there is no significant linear relationship between log(population) and life_expectancy in this model. We conclude log(population) does not explain much of the variation in life_expectancy.
 
+# This section is contributed by RINU THOMAS
 
+**Explore the dataset:**
+
+```{r}
+#look at help file for admissions data
+help(admissions)
+```
+
+```{r}
+#get an overview of data structure
+str(admissions)
+```
+
+```{r}
+#get a summary of data
+summary(admissions)
+```
+
+```{r}
+#determine the type of object gapminder is
+class(admissions)
+```
+
+**Checking to see if we need to clean the dataset:**
+
+```{r}
+# Check for missing values
+missing_values <- sum(is.na(admissions))
+print(paste("Number of missing values:", missing_values))
+
+```
+
+```{r}
+# Check for inconsistencies
+inconsistent_data <- admissions[admissions$admitted < 0 | admissions$admitted > 100, ]
+print("Inconsistent data:")
+print(inconsistent_data)
+```
+
+**Exploratory figures;**
+
+```{r}
+# Bar plot of admitted vs. major
+ggplot(admissions, aes(x = major, y = admitted, fill = gender)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Percent of Admitted Students by Major and Gender", x = "Major", y = "Percent Admitted")
+```
+
+```{r}
+# Bar plot of applicants vs. major
+ggplot(admissions, aes(x = major, y = applicants, fill = gender)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Number of Applicants by Major and Gender", x = "Major", y = "Number of Applicants")
+```
+
+```{r}
+# Admission rate  plot
+ggplot(admissions, aes(x = major, y = admitted / 100 * applicants, fill = gender)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Number of Admitted Students by Major and Gender", x = "Major", y = "Number of Admitted Students")
+```
+
+**Simple statistical model(s)**
+
+```{r}
+# Convert categorical variables to factors
+admissions$major <- as.factor(admissions$major)
+admissions$gender <- as.factor(admissions$gender)
+```
+
+```{r}
+# Fit linear regression model
+model <- lm(admitted ~ major + gender, data = admissions)
+summary(model)
+```
+
+**Results:**
+
+The linear regression model shows that the major has a significant impact on the percentage of students admitted, with majors C, D, E, and F having significantly lower admission rates compared to major A. Gender does not appear to have a significant impact on the admission rate in this model.
