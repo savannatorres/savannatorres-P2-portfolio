@@ -130,3 +130,123 @@ ggplot(cdc, aes(x = Lesser_Risk_Data_Value)) +
   geom_density(color = "red") +
   labs(title = "Distribution of Lesser_Risk_Data_Value", x = "Lesser_Risk_Data_Value", y = "Density")
 ```
+
+# This section is contributed by RINU THOMAS
+
+# Load necessary packages
+
+```{r}
+# Load necessary libraries
+library(tidyverse)
+```
+
+# Create and view the synthetic data
+
+```{r}
+# Set seed for reproducibility
+set.seed(123)
+
+# Define the number of rows
+n <- 357
+
+# Create synthetic data
+synthetic_data <- tibble(
+  YEAR = sample(c(2015, 2017), n, replace = TRUE),
+  Subtopic = sample(c("Other Tobacco Use"), n, replace = TRUE),
+  ShortQuestionText = sample(c("Current cigar use", "Current daily cigar use", "Frequent cigar use"), n, replace = TRUE),
+  Greater_Risk_Data_Value = runif(n, min = 0, max = 100),
+  Lesser_Risk_Data_Value = 100 - Greater_Risk_Data_Value
+)
+
+# View the first few rows of the synthetic dataset
+print(synthetic_data)
+```
+
+# Summarize the synthetic dataset
+
+**Summarized the data to see mean and median for the numerical variables.**
+
+```{r}
+summary(synthetic_data)
+```
+
+## Summarize Character Variables
+
+**First let's summarize subtopic**
+
+```{r}
+subtopic_table <- synthetic_data %>% 
+  count(Subtopic) %>% 
+  arrange(desc(n))
+
+print(subtopic_table)
+```
+
+**then let's summarize short questions**
+
+```{r}
+short_question_table <- synthetic_data %>% 
+  count(ShortQuestionText) %>% 
+  arrange(desc(n))
+
+print(short_question_table)
+
+```
+
+# Visualizations:
+
+**Distribution of Year**
+
+```{r}
+# Bar plot for YEAR
+ggplot(synthetic_data, aes(x = factor(YEAR))) +
+  geom_bar() +
+  labs(title = "Count of Records by Year", x = "Year", y = "Count") +
+  theme_minimal()
+
+```
+
+**Distribution of Subtopic**
+
+```{r}
+# Bar plot for Subtopic
+ggplot(synthetic_data, aes(x = Subtopic)) +
+  geom_bar() +
+  labs(title = "Count of Records by Subtopic", x = "Subtopic", y = "Count") +
+  theme_minimal()
+```
+
+**Distribution of ShortQuestionText**
+
+```{r}
+# Bar plot for ShortQuestionText
+ggplot(synthetic_data, aes(x = ShortQuestionText)) +
+  geom_bar() +
+  labs(title = "Count of Records by Short Question Text", x = "Short Question Text", y = "Count") +
+  theme_minimal()
+```
+
+**Histogram for Greater_Risk_Data_Value**
+
+```{r}
+# Histogram for Greater_Risk_Data_Value
+ggplot(synthetic_data, aes(x = Greater_Risk_Data_Value)) +
+  geom_histogram(binwidth = 5) +
+  labs(title = "Distribution of Greater Risk Data Value", x = "Greater Risk Data Value", y = "Count") +
+  theme_minimal()
+
+```
+
+**Observation:** The histogram shows a relatively uniform distribution of Greater_Risk_Data_Value, indicating that the values are spread evenly across the range from 0 to 100. This is consistent with the use of a uniform random number generator in the synthetic data creation process.
+
+**Histogram for Lesser_Risk_Data_Value**
+
+```{r}
+# Histogram for Lesser_Risk_Data_Value
+ggplot(synthetic_data, aes(x = Lesser_Risk_Data_Value)) +
+  geom_histogram(binwidth = 5) +
+  labs(title = "Distribution of Lesser Risk Data Value", x = "Lesser Risk Data Value", y = "Count") +
+  theme_minimal()
+```
+
+**Observation:** Similar to the Greater_Risk_Data_Value distribution, the histogram shows a relatively uniform distribution of Lesser_Risk_Data_Value, indicating that the values are spread evenly across the range from 0 to 100. This is consistent with the generation of synthetic data where Lesser_Risk_Data_Value is calculated as 100 - Greater_Risk_Data_Value.
