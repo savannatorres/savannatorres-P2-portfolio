@@ -1,0 +1,17 @@
+---
+title: "Data Exercise"
+---
+
+Find some data that falls into the categories described in the Complex data types unit. It could be some text or images or video or audio or any other complex data. Basically anything that’s not rectangular data with rows as observations and columns as variables.
+
+```{r}
+
+```
+
+
+Then look for some suitable R packages that allow you to explore the data. You don’t need to do any statistical analysis at this stage. Focus on loading the data, processing as needed, and then do some descriptive/exploratory analysis, e.g. by making plots or tables or… Basically anything that you can think of.
+
+```{r}
+
+```
+

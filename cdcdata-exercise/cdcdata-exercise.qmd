@@ -1,0 +1,132 @@
+---
+title: "CDC data exercise"
+---
+
+This data set is provided by the Division of Adolescent School Health(DASH) and can be found here: <https://data.cdc.gov/Youth-Risk-Behaviors/DASH-YRBSS-HS-Cigar-Use-by-total-grade-sex-race-se/bedg-mmpy/about_data>.
+
+The Youth Risk Behavior Surveillance System (YRBSS) monitors six categories of priority health behaviors among youth and young adults: 1) behaviors that contribute to unintentional injuries and violence; 2) tobacco use; 3) alcohol and other drug use; 4) sexual behaviors related to unintended pregnancy and sexually transmitted infections (STIs), including human immunodeficiency virus (HIV) infection; 5) unhealthy dietary behaviors; and 6) physical inactivity. In addition, YRBSS monitors the prevalence of obesity and asthma and other priority health behaviors. This dataset contains national, state, and local data from 2015 that includes two aspects of sexual orientation – sexual identity and sex of sexual contacts. Additional information about the YRBSS can be found at [www.cdc.gov/yrbss](http://www.cdc.gov/yrbss).
+
+```{r}
+library(readr)
+library(ggplot2)
+library(dplyr)
+library(here)
+```
+
+```{r,}
+#Define data location using here() package
+data_location = here::here("cdcdata-exercise","cdc.csv")
+
+# Load Data
+data = read_csv(data_location)
+head(data)
+str(data)
+
+```
+
+```{r}
+cdc <- subset(data, select = c("YEAR","Subtopic", "ShortQuestionText", "Greater_Risk_Data_Value", "Lesser_Risk_Data_Value"))
+
+str(cdc)
+```
+
+Summarizing Year
+
+```{r}
+# Frequency table
+year_freq <- table(cdc$YEAR)
+
+# Percentage table
+year_percent <- prop.table(year_freq) * 100
+
+# Print tables
+print(year_freq)
+print(year_percent)
+
+# Bar plot
+library(ggplot2)
+ggplot(cdc, aes(x = factor(YEAR))) +
+  geom_bar() +
+  labs(title = "Frequency of YEAR", x = "YEAR", y = "Count")
+
+```
+
+Summarizing Subtopic
+
+```{r}
+# Frequency table
+subtopic_freq <- table(cdc$Subtopic)
+
+# Percentage table
+subtopic_percent <- prop.table(subtopic_freq) * 100
+
+# Print tables
+print(subtopic_freq)
+print(subtopic_percent)
+
+# Bar plot
+ggplot(cdc, aes(x = Subtopic)) +
+  geom_bar() +
+  labs(title = "Frequency of Subtopic", x = "Subtopic", y = "Count") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+Summarizing ShortQuestionText
+
+```{r}
+# Frequency table
+shortquestiontext_freq <- table(cdc$ShortQuestionText)
+
+# Percentage table
+shortquestiontext_percent <- prop.table(shortquestiontext_freq) * 100
+
+# Print tables
+print(shortquestiontext_freq)
+print(shortquestiontext_percent)
+
+# Bar plot
+ggplot(cdc, aes(x = ShortQuestionText)) +
+  geom_bar() +
+  labs(title = "Frequency of ShortQuestionText", x = "ShortQuestionText", y = "Count") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+Summarizing Greater Risk Data Value
+
+```{r}
+# Descriptive statistics
+greater_risk_summary <- summary(cdc$Greater_Risk_Data_Value)
+greater_risk_mean <- mean(cdc$Greater_Risk_Data_Value, na.rm = TRUE)
+greater_risk_sd <- sd(cdc$Greater_Risk_Data_Value, na.rm = TRUE)
+
+# Print statistics
+print(greater_risk_summary)
+cat("Mean:", greater_risk_mean, "\n")
+cat("Standard Deviation:", greater_risk_sd, "\n")
+
+# Histogram and density plot
+ggplot(cdc, aes(x = Greater_Risk_Data_Value)) +
+  geom_histogram(aes(y = ..density..), binwidth = 1, fill = "blue", alpha = 0.7) +
+  geom_density(color = "red") +
+  labs(title = "Distribution of Greater_Risk_Data_Value", x = "Greater_Risk_Data_Value", y = "Density")
+```
+
+Summarizing Lesser Risk Data Value
+
+```{r}
+# Descriptive statistics
+lesser_risk_summary <- summary(cdc$Lesser_Risk_Data_Value)
+lesser_risk_mean <- mean(cdc$Lesser_Risk_Data_Value, na.rm = TRUE)
+lesser_risk_sd <- sd(cdc$Lesser_Risk_Data_Value, na.rm = TRUE)
+
+# Print statistics
+print(lesser_risk_summary)
+cat("Mean:", lesser_risk_mean, "\n")
+cat("Standard Deviation:", lesser_risk_sd, "\n")
+
+# Histogram and density plot
+ggplot(cdc, aes(x = Lesser_Risk_Data_Value)) +
+  geom_histogram(aes(y = ..density..), binwidth = 1, fill = "blue", alpha = 0.7) +
+  geom_density(color = "red") +
+  labs(title = "Distribution of Lesser_Risk_Data_Value", x = "Lesser_Risk_Data_Value", y = "Density")
+```
